@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/DatePicker";
@@ -561,4 +562,272 @@ const Index = () => {
                       <div>
                         <p className="text-gray-600">Seçilen Bilgiler:</p>
                         <p className="text-[#33C3F0] font-medium">
-                          {selectedHotel?.name}, {formatDate(checkInDate)} - {format
+                          {selectedHotel?.name}, {formatDate(checkInDate)} - {formatDate(checkOutDate)}
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button 
+                          onClick={() => setStep(2)}
+                          variant="outline"
+                          className="border-[#33C3F0] text-[#33C3F0]"
+                        >
+                          Geri
+                        </Button>
+                        <Button 
+                          onClick={() => selectedTransport && setStep(4)}
+                          disabled={!selectedTransport}
+                          className="bg-[#33C3F0] hover:bg-[#1EAEDB]"
+                        >
+                          Devam Et
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 4: Passenger Info */}
+              {step === 4 && (
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-[#33C3F0] mb-4">Yolcu Bilgileri</h2>
+                  <p className="text-gray-600 mb-6">
+                    Lütfen rezervasyon sahibi kişi bilgilerini giriniz.
+                  </p>
+
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(handlePassengerSubmit)} className="space-y-4">
+                      <FormField
+                        control={form.control}
+                        name="fullName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Ad Soyad</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Ad ve soyadınızı giriniz" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="identityNumber"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>T.C. Kimlik Numarası</FormLabel>
+                            <FormControl>
+                              <Input placeholder="11 haneli kimlik numarasını giriniz" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="birthDate"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Doğum Tarihi</FormLabel>
+                            <FormControl>
+                              <Input type="date" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Telefon Numarası</FormLabel>
+                            <FormControl>
+                              <Input placeholder="05xx xxx xx xx" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>E-posta Adresi</FormLabel>
+                            <FormControl>
+                              <Input type="email" placeholder="ornek@email.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <div className="mt-8 bg-blue-50 p-4 rounded-md">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <p className="text-gray-600">Seçilen Bilgiler:</p>
+                            <p className="text-[#33C3F0] font-medium">
+                              {selectedHotel?.name}, {formatDate(checkInDate)} - {formatDate(checkOutDate)}, {transportType === 'flight' ? 'Uçak' : 'Otobüs'}
+                            </p>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button 
+                              type="button"
+                              onClick={() => setStep(3)}
+                              variant="outline"
+                              className="border-[#33C3F0] text-[#33C3F0]"
+                            >
+                              Geri
+                            </Button>
+                            <Button 
+                              type="submit"
+                              className="bg-[#33C3F0] hover:bg-[#1EAEDB]"
+                            >
+                              Devam Et
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </Form>
+                </div>
+              )}
+
+              {/* Step 5: Payment */}
+              {step === 5 && (
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold text-[#33C3F0] mb-4">Ödeme Bilgileri</h2>
+                  <p className="text-gray-600 mb-6">
+                    Tebrikler! Tatil paketiniz hazır. Sistemdeki yerinizi onaylamak için lütfen ödeme yapınız.
+                  </p>
+                  
+                  <div className="border rounded-lg p-6 mb-6">
+                    <h3 className="text-xl font-medium mb-4">Ödeme Detayları</h3>
+                    
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-sm text-gray-500">Banka Adı</p>
+                          <p className="font-medium">Örnek Banka A.Ş.</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-500">Hesap Sahibi</p>
+                          <p className="font-medium">Firma Ünvanı</p>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <p className="text-sm text-gray-500">IBAN</p>
+                        <p className="font-medium font-mono">TR00 0000 0000 0000 0000 0000 00</p>
+                      </div>
+                      
+                      <div>
+                        <p className="text-sm text-gray-500">Tutar</p>
+                        <p className="text-2xl font-bold text-[#33C3F0]">5.680 TL</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border rounded-lg p-6 mb-6">
+                    <h3 className="text-xl font-medium mb-4">Dekont Yükleme</h3>
+                    <p className="text-gray-600 mb-4">
+                      Lütfen ödemenizi gerçekleştirdikten sonra dekontu aşağıdaki alana yükleyiniz.
+                    </p>
+                    
+                    <div className="flex items-center justify-center w-full">
+                      <label 
+                        htmlFor="dropzone-file" 
+                        className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+                      >
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          <Upload className="w-10 h-10 mb-3 text-gray-400" />
+                          <p className="mb-2 text-sm text-gray-500">
+                            <span className="font-semibold">Dosya yüklemek için tıklayın</span> veya sürükleyip bırakın
+                          </p>
+                          <p className="text-xs text-gray-500">PNG, JPG veya PDF (Max. 10MB)</p>
+                        </div>
+                        <input 
+                          id="dropzone-file" 
+                          type="file" 
+                          className="hidden" 
+                          onChange={handleFileUpload} 
+                        />
+                      </label>
+                    </div>
+                    
+                    {uploadedFile && (
+                      <div className="mt-4 p-3 bg-gray-50 rounded-lg flex items-center justify-between">
+                        <div className="flex items-center">
+                          <FileUp className="h-5 w-5 text-gray-500 mr-2" />
+                          <span className="text-sm font-medium text-gray-700">{uploadedFile.name}</span>
+                        </div>
+                        <span className="text-xs text-gray-500">{Math.round(uploadedFile.size / 1024)} KB</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="border rounded-lg p-6 mb-6 bg-blue-50">
+                    <div className="flex items-start mb-4">
+                      <Info className="h-5 w-5 text-[#33C3F0] mr-2 mt-0.5" />
+                      <div>
+                        <h4 className="font-medium">Güvenliğiniz Önceliğimizdir</h4>
+                        <p className="text-sm text-gray-600 mt-1">
+                          Bu işlem yalnızca sistem onayı ve tatil kazanımınızı teyit amacıyla yapılmaktadır. 
+                          Hiçbir ek ücret talep edilmeyecek olup, tüm haklarınız tarafımızca korunmaktadır.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <Info className="h-5 w-5 text-[#33C3F0] mr-2 mt-0.5" />
+                      <div>
+                        <h4 className="font-medium">Ödeme Sonrası Bilgilendirme</h4>
+                        <p className="text-sm text-gray-600 mt-1">
+                          Ödemeniz kontrol ediliyor... Ortalama kontrol süresi: 1 ila 3 dakika.
+                          Onay sonrası, aynı gün içinde ödemeniz gönderim yaptığınız banka hesabına iade edilecektir.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-8 bg-blue-50 p-4 rounded-md">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-gray-600">Seçilen Paket:</p>
+                        <p className="text-[#33C3F0] font-medium">
+                          {selectedHotel?.name}, {formatDate(checkInDate)} - {formatDate(checkOutDate)}, {passengerCount} Kişi
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button 
+                          onClick={() => setStep(4)}
+                          variant="outline"
+                          className="border-[#33C3F0] text-[#33C3F0]"
+                        >
+                          Geri
+                        </Button>
+                        <Button 
+                          onClick={() => setPaymentConfirmed(true)}
+                          disabled={!uploadedFile}
+                          className="bg-[#33C3F0] hover:bg-[#1EAEDB]"
+                        >
+                          Tamamla
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Index;
